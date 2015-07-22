@@ -1,0 +1,12 @@
+target
+work
+
+# Eclipse project files
+.settings
+.classpath
+.project
+
+#vim
+*.swp
+*.swi
+*~
