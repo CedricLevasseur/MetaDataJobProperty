@@ -1,0 +1,14 @@
+<#if licenseFirst??>
+${licenseFirst}
+</#if>
+${licensePrefix}    This file is part of MetaDataProject.
+${licensePrefix}
+${licensePrefix}    MetaDataProject is free software: you can redistribute it and/or modify
+${licensePrefix}    it under the terms of the GNU General Public License as published by
+${licensePrefix}    the Free Software Foundation, either version 3 of the License, or
+${licensePrefix}    (at your option) any later version
+${licensePrefix}    Please consult http://www.gnu.org/licenses/agpl.txt or Licence.txt in this project
+${licensePrefix}    Copyright @ 2015 Cédric Levasseur,  http://www.cedriclevasseur.com cedric.levasseur@gmail.com
+<#if licenseLast??>
+${licenseLast}
+</#if>
