@@ -10,7 +10,6 @@
  */
 package com.cedriclevasseur.jenkinsci.plugins.metadataproject.MetaDataProject;
 
-import hudson.Extension;
 import static hudson.Util.fixEmptyAndTrim;
 import static hudson.Util.fixEmpty;
 import hudson.Extension;
@@ -29,40 +28,50 @@ import org.kohsuke.stapler.StaplerRequest;
  */
 public class MetadataprojectJobProperty extends JobProperty<AbstractProject<?, ?>> {
 
-    private boolean metadataprojectEnabled = false;
-    private Map<String, String> metadataprojectEnabledMap = null;
+    private final boolean metadataprojectEnabled;
+    
+    private final Map<String, String> metadataprojectEnabledMap = null;
+    
+    /* using a unique key/value for the moment,
+     * we'll see for a map later
+     */
+    private final String metadata_key1;
+    
+    private final String metadata_value1;
 
     @DataBoundConstructor
-    public MetadataprojectJobProperty(boolean metadataprojectEnabled) {
+    public MetadataprojectJobProperty(boolean metadataprojectEnabled, String metadata_key1, String metadata_value1) {
         this.metadataprojectEnabled = metadataprojectEnabled;
+        this.metadata_key1=metadata_key1;
+        this.metadata_value1=metadata_value1;
     }
 
+    
     @Extension
     public static final DescriptorImpl DESCRIPTOR = new DescriptorImpl();
 
+    /* getters */
+    
     public boolean isMetadataprojectEnabled() {
         return metadataprojectEnabled;
     }
-
-    public void setMetadataprojectEnabled(boolean metadataprojectEnabled) {
-        this.metadataprojectEnabled = metadataprojectEnabled;
-    }
-
+    
     public Map<String, String> getMetadataprojectEnabledMap() {
         return metadataprojectEnabledMap;
     }
 
-    public void setMetadataprojectEnabledMap(Map<String, String> metadataprojectEnabledMap) {
-        this.metadataprojectEnabledMap = metadataprojectEnabledMap;
+    public String getMetadata_key1() {
+        return metadata_key1;
     }
+
+    public String getMetadata_value1() {
+        return metadata_value1;
+    }
+    
+    
 
     public static final class DescriptorImpl extends JobPropertyDescriptor {
 
-        /* using a unique key/value for the moment,
-         * we'll see for a map later
-         */
-        private String metadata_key1;
-        private String metadata_value1;
 
         public DescriptorImpl() {
             super(MetadataprojectJobProperty.class);
@@ -75,7 +84,10 @@ public class MetadataprojectJobProperty extends JobProperty<AbstractProject<?, ?
                 formData.put("metadataprojectEnabled", true);
             } else {
                 formData.put("metadataprojectEnabled", false);
+                formData.put("metadata_key1", "");
+                formData.put("metadata_value1", "");
             }
+            
             MetadataprojectJobProperty jobProperty = req.bindJSON(MetadataprojectJobProperty.class, formData);
             return jobProperty;
         }
@@ -86,21 +98,11 @@ public class MetadataprojectJobProperty extends JobProperty<AbstractProject<?, ?
 
         @Override
         public boolean configure(StaplerRequest req, JSONObject o) throws FormException {
-
-            metadata_key1 = fixEmpty(req.getParameter("metadataproject.metadata_key1"));
-            metadata_value1 = fixEmpty(req.getParameter("metadataproject.metadata_value1"));
-
             save();
             return true;
         }
 
-        public String getMetadata_key1() {
-            return metadata_key1;
-        }
 
-        public String getMetadata_value1() {
-            return metadata_value1;
-        }
     }
 
 }
