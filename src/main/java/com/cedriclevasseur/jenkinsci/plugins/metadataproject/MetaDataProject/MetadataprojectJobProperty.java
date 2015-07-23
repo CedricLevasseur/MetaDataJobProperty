@@ -58,6 +58,12 @@ public class MetadataprojectJobProperty extends JobProperty<AbstractProject<?, ?
 
     public static final class DescriptorImpl extends JobPropertyDescriptor {
 
+        /* using a unique key/value for the moment,
+         * we'll see for a map later
+         */
+        private String key1;
+        private String value1;
+
         public DescriptorImpl() {
             super(MetadataprojectJobProperty.class);
             load();
@@ -80,10 +86,29 @@ public class MetadataprojectJobProperty extends JobProperty<AbstractProject<?, ?
 
         @Override
         public boolean configure(StaplerRequest req, JSONObject o) throws FormException {
+
+            key1 = fixEmpty(req.getParameter("metadataproject.metadata_key1"));
+            value1 = fixEmpty(req.getParameter("metadataproject.metadata_value1"));
+
             save();
             return true;
         }
 
+        public String getKey1() {
+            return key1;
+        }
+
+        public void setKey1(String key1) {
+            this.key1 = key1;
+        }
+
+        public String getValue1() {
+            return value1;
+        }
+
+        public void setValue1(String value1) {
+            this.value1 = value1;
+        }
     }
 
 }

@@ -1,9 +1,8 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-  To be completed
-  <f:section title="Hello World Builder">
-    <f:entry title="French" field="useFrench"
-      description="Check if we should say hello in French">
-      <f:checkbox />
+  <f:section title="${%MetaDataProject Plugin}">
+    <f:entry title="${%A metadata}">
+        <f:textbox name="metadataproject.metadata_key1" value="${descriptor.key1}" />
+        <f:textbox name="metadataproject.metadata_value1" value="${descriptor.value1}" />
     </f:entry>
   </f:section>
 </j:jelly>
