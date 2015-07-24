@@ -8,9 +8,9 @@
  *     Please consult http://www.gnu.org/licenses/agpl.txt or Licence.txt in this project
  *     Copyright @ 2015 Cédric Levasseur,  http://www.cedriclevasseur.com cedric.levasseur@gmail.com
  */
-package com.cedriclevasseur.jenkinsci.plugins.metadataproject.MetaDataProject;
+package com.cedriclevasseur.jenkinsci.plugins.metadataproject;
 
-import com.cedriclevasseur.jenkinsci.plugins.metadataproject.MetaDataProject.MetadataprojectJobProperty.MetaData;
+import com.cedriclevasseur.jenkinsci.plugins.metadataproject.MetadataprojectJobProperty.MetaData;
 import hudson.Extension;
 import hudson.model.JobProperty;
 import hudson.model.JobPropertyDescriptor;
