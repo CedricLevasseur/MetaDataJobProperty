@@ -66,13 +66,6 @@ public class MetadataprojectJobProperty extends JobProperty<AbstractProject<?, ?
 
         @Override
         public JobProperty<?> newInstance(StaplerRequest req, JSONObject formData) throws FormException {
-            if (formData.has("metadataprojectEnabled")) {
-                formData.put("metadataprojectEnabled", true);
-            } else {
-                formData.put("metadataprojectEnabled", false);
-                formData.put("metadata_key1", "");
-                formData.put("metadata_value1", "");
-            }
             
             MetadataprojectJobProperty jobProperty = req.bindJSON(MetadataprojectJobProperty.class, formData);
             return jobProperty;
