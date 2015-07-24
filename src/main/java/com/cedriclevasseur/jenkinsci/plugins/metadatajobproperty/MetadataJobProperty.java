@@ -1,21 +1,20 @@
 /*
- *     This file is part of MetaDataProject.
+ *     This file is part of MetaDataJobProperty.
  * 
- *     MetaDataProject is free software: you can redistribute it and/or modify
+ *     MetaDataJobProperty is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
  *     the Free Software Foundation, either version 3 of the License, or
  *     (at your option) any later version
  *     Please consult http://www.gnu.org/licenses/agpl.txt or Licence.txt in this project
  *     Copyright @ 2015 Cédric Levasseur,  http://www.cedriclevasseur.com cedric.levasseur@gmail.com
  */
-package com.cedriclevasseur.jenkinsci.plugins.metadataproject;
+package com.cedriclevasseur.jenkinsci.plugins.metadatajobproperty;
 
-import com.cedriclevasseur.jenkinsci.plugins.metadataproject.MetadataprojectJobProperty.MetaData;
+import com.cedriclevasseur.jenkinsci.plugins.metadatajobproperty.MetadataJobProperty.MetaData;
 import hudson.Extension;
 import hudson.model.JobProperty;
 import hudson.model.JobPropertyDescriptor;
 import hudson.model.AbstractProject;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,15 +27,17 @@ import org.kohsuke.stapler.StaplerRequest;
  *
  * @author Cédric Levasseur cedric.levasseur@gmail.com
  */
-public class MetadataprojectJobProperty extends JobProperty<AbstractProject<?, ?>> {
+public class MetadataJobProperty extends JobProperty<AbstractProject<?, ?>> {
 
-    public static final String PROPERTY_NAME = "metadataprojectJobProperty";
+    //the main checkbox in a job
+    public static final String PROPERTY_NAME = "metadataJobProperty";
     
+    //the map containing all the MetaData
     private final List<MetaData> listOfMetaData;
 
      
     @DataBoundConstructor
-    public MetadataprojectJobProperty(List<MetaData> listOfMetaData) {
+    public MetadataJobProperty(List<MetaData> listOfMetaData) {
         this.listOfMetaData=listOfMetaData;
     }
 
@@ -49,25 +50,47 @@ public class MetadataprojectJobProperty extends JobProperty<AbstractProject<?, ?
         return listOfMetaData;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder result =new StringBuilder ("MetadataJobProperty{");
+        for (MetaData m : listOfMetaData)
+        {
+            result.append(m.getKey()).append("=").append(m.getValue()).append(";");
+        }
+        result.append("}");
+        return result.toString();
+    }
+
 
     
-    private static final Logger LOGGER = Logger.getLogger(MetadataprojectJobProperty.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(MetadataJobProperty.class.getName());
 
+    
+    /**
+     * This class is used by the Jelly part
+     */
     public static final class DescriptorImpl extends JobPropertyDescriptor {
 
 
         public DescriptorImpl() {
-            super(MetadataprojectJobProperty.class);
+            super(MetadataJobProperty.class);
             load();
         }
 
         /**
-         * @return key name used in the configuration innerForm.
+         * @return key name used in the configuration Form.
          */
         public String getPropertyName() {
             return PROPERTY_NAME;
         }
         
+        /**
+         * Create the map from the http/json form
+         * @param req
+         * @param formData
+         * @return
+         * @throws hudson.model.Descriptor.FormException 
+         */
         @Override
         public JobProperty<?> newInstance(StaplerRequest req, JSONObject formData) throws FormException {
             
@@ -79,14 +102,21 @@ public class MetadataprojectJobProperty extends JobProperty<AbstractProject<?, ?
             if(innerForm == null || innerForm.isNullObject()) {
                 return null;
             }           
-            MetadataprojectJobProperty jobProperty = req.bindJSON(MetadataprojectJobProperty.class, innerForm);
+            MetadataJobProperty jobProperty = req.bindJSON(MetadataJobProperty.class, innerForm);
             return jobProperty;
         }
 
         public String getDisplayName() {
-            return "MetaDataProject";
+            return "MetaDataJobProperty";
         }
 
+        /**
+         * Save globals plugin configuration from a http/json form
+         * @param req
+         * @param o
+         * @return
+         * @throws hudson.model.Descriptor.FormException 
+         */
         @Override
         public boolean configure(StaplerRequest req, JSONObject o) throws FormException {
             LOGGER.log(Level.INFO,"configure with req="+req.toString());
@@ -154,6 +184,4 @@ public class MetadataprojectJobProperty extends JobProperty<AbstractProject<?, ?
       
     }
 
-    
-    
 }
