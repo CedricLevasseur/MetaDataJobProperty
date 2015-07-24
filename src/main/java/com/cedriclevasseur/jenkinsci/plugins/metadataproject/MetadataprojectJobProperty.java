@@ -30,9 +30,8 @@ import org.kohsuke.stapler.StaplerRequest;
  */
 public class MetadataprojectJobProperty extends JobProperty<AbstractProject<?, ?>> {
 
-    /* using a unique key/value for the moment,
-     * we'll see for a map later
-     */
+    public static final String PROPERTY_NAME = "metadataprojectJobProperty";
+    
     private final List<MetaData> listOfMetaData;
 
      
@@ -50,6 +49,7 @@ public class MetadataprojectJobProperty extends JobProperty<AbstractProject<?, ?
         return listOfMetaData;
     }
 
+
     
     private static final Logger LOGGER = Logger.getLogger(MetadataprojectJobProperty.class.getName());
 
@@ -61,11 +61,25 @@ public class MetadataprojectJobProperty extends JobProperty<AbstractProject<?, ?
             load();
         }
 
+        /**
+         * @return key name used in the configuration innerForm.
+         */
+        public String getPropertyName() {
+            return PROPERTY_NAME;
+        }
+        
         @Override
         public JobProperty<?> newInstance(StaplerRequest req, JSONObject formData) throws FormException {
             
-            LOGGER.log(Level.WARNING,"formData= "+formData.toString());
-            MetadataprojectJobProperty jobProperty = req.bindJSON(MetadataprojectJobProperty.class, formData);
+            if(formData == null || formData.isNullObject()) {
+                return null;
+            }
+            LOGGER.log(Level.INFO,"formData= "+formData.toString());
+            JSONObject innerForm = formData.getJSONObject(getPropertyName());
+            if(innerForm == null || innerForm.isNullObject()) {
+                return null;
+            }           
+            MetadataprojectJobProperty jobProperty = req.bindJSON(MetadataprojectJobProperty.class, innerForm);
             return jobProperty;
         }
 
@@ -75,9 +89,7 @@ public class MetadataprojectJobProperty extends JobProperty<AbstractProject<?, ?
 
         @Override
         public boolean configure(StaplerRequest req, JSONObject o) throws FormException {
-            
-            LOGGER.log(Level.WARNING,"configure with req="+req.toString());
-            
+            LOGGER.log(Level.INFO,"configure with req="+req.toString());
             save();
             return true;
         }
