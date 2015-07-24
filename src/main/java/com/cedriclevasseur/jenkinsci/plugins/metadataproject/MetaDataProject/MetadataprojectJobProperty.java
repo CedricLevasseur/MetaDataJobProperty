@@ -134,6 +134,11 @@ public class MetadataprojectJobProperty extends JobProperty<AbstractProject<?, ?
             return hash;
         }
 
+        @Override
+        public String toString() {
+            return "MetaData{" + "key=" + key + ", value=" + value + '}';
+        }
+        
       
     }
 
