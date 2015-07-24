@@ -1,8 +1,24 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-     <f:entry title="${%A metadata key}" field="metadata_key1">
-        <f:textbox />
-    </f:entry>
-    <f:entry title="${%A metadata value}"  field="metadata_value1">
-        <f:textbox name="metadata_value1" />
-    </f:entry>
+    <div>
+    Insert some metadatas :
+    </div>    
+    <f:entry field="listOfMetaData">
+        <f:repeatable name="listOfMetaData" items="${instance.listOfMetaData}" var="m">
+            <table width="100%">
+                <tr>
+                    <td width="10%" align="right">${%Key}</td>
+                    <td width="30%">
+                        <f:textbox name="m.key" value="${!empty m.key?m.key:''}"/>
+                    </td>
+                    <td width="10%" align="right">${%Value}</td>
+                    <td width="30%">
+                        <f:textbox name="m.value" value="${!empty m.value?m.value:''}"/>
+                    </td>
+                    <td width="20%" align="right">
+                        <f:repeatableDeleteButton/>
+                    </td>
+                </tr>
+            </table>
+        </f:repeatable>
+    </f:entry>    
 </j:jelly>
