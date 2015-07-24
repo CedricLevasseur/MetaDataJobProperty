@@ -28,20 +28,15 @@ import org.kohsuke.stapler.StaplerRequest;
  */
 public class MetadataprojectJobProperty extends JobProperty<AbstractProject<?, ?>> {
 
-    private final boolean metadataprojectEnabled;
-    
-    private final Map<String, String> metadataprojectEnabledMap = null;
-    
     /* using a unique key/value for the moment,
      * we'll see for a map later
      */
     private final String metadata_key1;
     
     private final String metadata_value1;
-
+    
     @DataBoundConstructor
-    public MetadataprojectJobProperty(boolean metadataprojectEnabled, String metadata_key1, String metadata_value1) {
-        this.metadataprojectEnabled = metadataprojectEnabled;
+    public MetadataprojectJobProperty(String metadata_key1, String metadata_value1) {
         this.metadata_key1=metadata_key1;
         this.metadata_value1=metadata_value1;
     }
@@ -51,14 +46,6 @@ public class MetadataprojectJobProperty extends JobProperty<AbstractProject<?, ?
     public static final DescriptorImpl DESCRIPTOR = new DescriptorImpl();
 
     /* getters */
-    
-    public boolean isMetadataprojectEnabled() {
-        return metadataprojectEnabled;
-    }
-    
-    public Map<String, String> getMetadataprojectEnabledMap() {
-        return metadataprojectEnabledMap;
-    }
 
     public String getMetadata_key1() {
         return metadata_key1;
@@ -67,8 +54,7 @@ public class MetadataprojectJobProperty extends JobProperty<AbstractProject<?, ?
     public String getMetadata_value1() {
         return metadata_value1;
     }
-    
-    
+
 
     public static final class DescriptorImpl extends JobPropertyDescriptor {
 

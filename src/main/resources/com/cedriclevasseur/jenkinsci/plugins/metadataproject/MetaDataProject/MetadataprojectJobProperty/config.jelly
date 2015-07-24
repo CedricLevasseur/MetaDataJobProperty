@@ -1,10 +1,8 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-<f:optionalBlock name="metadataproject.metadataprojectEnabled" title="${%Enabled MetaData for this project}" checked="${instance.metadataprojectEnabled}" >
-    <f:entry title="${%A metadata key}" field="${instance.metadata_key1}">
+     <f:entry title="${%A metadata key}" field="metadata_key1">
         <f:textbox />
     </f:entry>
-    <f:entry title="${%A metadata value}" field="${instance.metadata_value1}">
-        <f:textbox />
+    <f:entry title="${%A metadata value}"  field="metadata_value1">
+        <f:textbox name="metadata_value1" />
     </f:entry>
-</f:optionalBlock>
 </j:jelly>
