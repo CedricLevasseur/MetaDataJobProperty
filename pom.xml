@@ -10,7 +10,7 @@
      <version>1.420</version>
     <relativePath/>
   </parent>
-  <groupId>com.cedriclevasseur.jenkins-ci.plugins.metadataproject</groupId>
+  <groupId>com.cedriclevasseur.jenkins-ci.plugins.metadatajobproperty</groupId>
   <artifactId>MetadataJobProperty</artifactId>
   <version>1.0</version>
   <packaging>hpi</packaging>
