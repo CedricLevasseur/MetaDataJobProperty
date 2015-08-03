@@ -15,6 +15,7 @@ import hudson.Extension;
 import hudson.model.JobProperty;
 import hudson.model.JobPropertyDescriptor;
 import hudson.model.AbstractProject;
+import hudson.model.Job;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,14 +36,16 @@ public class MetadataJobProperty extends JobProperty<AbstractProject<?, ?>> {
     //the map containing all the MetaData
     private final List<MetaData> listOfMetaData;
 
+    private boolean useMetadataJobProperty;
      
     @DataBoundConstructor
-    public MetadataJobProperty(List<MetaData> listOfMetaData) {
+    public MetadataJobProperty(boolean useMetadataJobProperty, List<MetaData> listOfMetaData) {
+        this.useMetadataJobProperty=useMetadataJobProperty;
         this.listOfMetaData=listOfMetaData;
     }
 
-    @Extension
-    public static final DescriptorImpl DESCRIPTOR = new DescriptorImpl();
+//    @Extension
+//    public static final DescriptorImpl DESCRIPTOR = new DescriptorImpl();
 
     /* getters */
 
@@ -50,6 +53,15 @@ public class MetadataJobProperty extends JobProperty<AbstractProject<?, ?>> {
         return listOfMetaData;
     }
 
+    public boolean isUseMetadataJobProperty() {
+        return useMetadataJobProperty;
+    }
+
+    public void setUseMetadataJobProperty(boolean useMetadataJobProperty) {
+        this.useMetadataJobProperty = useMetadataJobProperty;
+    }
+
+    
     @Override
     public String toString() {
         StringBuilder result =new StringBuilder ("MetadataJobProperty{");
@@ -69,6 +81,7 @@ public class MetadataJobProperty extends JobProperty<AbstractProject<?, ?>> {
     /**
      * This class is used by the Jelly part
      */
+    @Extension
     public static final class DescriptorImpl extends JobPropertyDescriptor {
 
 
@@ -95,6 +108,7 @@ public class MetadataJobProperty extends JobProperty<AbstractProject<?, ?>> {
         public JobProperty<?> newInstance(StaplerRequest req, JSONObject formData) throws FormException {
             
             if(formData == null || formData.isNullObject()) {
+                LOGGER.log(Level.INFO,"formData is Null" );
                 return null;
             }
             LOGGER.log(Level.INFO,"formData= "+formData.toString());
@@ -121,6 +135,17 @@ public class MetadataJobProperty extends JobProperty<AbstractProject<?, ?>> {
         public boolean configure(StaplerRequest req, JSONObject o) throws FormException {
             LOGGER.log(Level.INFO,"configure with req="+req.toString());
             save();
+            return true;
+        }
+        
+        /**
+         * Returns always true as it can be used in all types of jobs.
+         *
+         * @param jobType the job type to be checked if this property is applicable.
+         * @return true
+         */
+        @Override
+        public boolean isApplicable(Class<? extends Job> jobType) {
             return true;
         }
 
