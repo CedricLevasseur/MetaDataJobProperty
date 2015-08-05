@@ -36,12 +36,9 @@ public class MetadataJobProperty extends JobProperty<AbstractProject<?, ?>> {
     //the map containing all the MetaData
     private final List<MetaData> listOfMetaData;
 
-    private boolean useMetadataJobProperty;
-     
     @DataBoundConstructor
-    public MetadataJobProperty(boolean useMetadataJobProperty, List<MetaData> listOfMetaData) {
-        this.useMetadataJobProperty=useMetadataJobProperty;
-        this.listOfMetaData=listOfMetaData;
+    public MetadataJobProperty(List<MetaData> listOfMetaData) {
+         this.listOfMetaData=listOfMetaData;
     }
 
 //    @Extension
@@ -53,15 +50,6 @@ public class MetadataJobProperty extends JobProperty<AbstractProject<?, ?>> {
         return listOfMetaData;
     }
 
-    public boolean isUseMetadataJobProperty() {
-        return useMetadataJobProperty;
-    }
-
-    public void setUseMetadataJobProperty(boolean useMetadataJobProperty) {
-        this.useMetadataJobProperty = useMetadataJobProperty;
-    }
-
-    
     @Override
     public String toString() {
         StringBuilder result =new StringBuilder ("MetadataJobProperty{");
@@ -72,11 +60,8 @@ public class MetadataJobProperty extends JobProperty<AbstractProject<?, ?>> {
         result.append("}");
         return result.toString();
     }
-
-
     
     private static final Logger LOGGER = Logger.getLogger(MetadataJobProperty.class.getName());
-
     
     /**
      * This class is used by the Jelly part
@@ -112,11 +97,11 @@ public class MetadataJobProperty extends JobProperty<AbstractProject<?, ?>> {
                 return null;
             }
             LOGGER.log(Level.INFO,"formData= "+formData.toString());
-            JSONObject innerForm = formData.getJSONObject(getPropertyName());
-            if(innerForm == null || innerForm.isNullObject()) {
+            Boolean checkbox = formData.getBoolean(getPropertyName());
+            if(checkbox == null || checkbox == Boolean.FALSE ){
                 return null;
             }           
-            MetadataJobProperty jobProperty = req.bindJSON(MetadataJobProperty.class, innerForm);
+            MetadataJobProperty jobProperty = req.bindJSON(MetadataJobProperty.class, formData);
             return jobProperty;
         }
 
