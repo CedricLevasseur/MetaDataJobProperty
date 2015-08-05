@@ -12,12 +12,13 @@
   </parent>
   <groupId>com.cedriclevasseur.jenkins-ci.plugins.metadatajobproperty</groupId>
   <artifactId>MetadataJobProperty</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.1</version>
   <packaging>hpi</packaging>
 
-  <name>MetaDataJobProperty Jenkins Plugin</name>
+  <name>MetaDataJobProperty Plugin</name>
   <description>Add some metadata to your project</description>
-  <url>https://wiki.jenkins-ci.org/display/JENKINS/metaDataJobProperty</url>
+  <!--<url>https://wiki.jenkins-ci.org/display/JENKINS/metaDataJobProperty</url>-->
+  <url>https://github.com/CedricLevasseur/MetaDataJobProperty</url>
   <licenses>
     <license>
       <name>GPL 3</name>
