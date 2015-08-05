@@ -61,6 +61,21 @@ public class MetadataJobProperty extends JobProperty<AbstractProject<?, ?>> {
         return result.toString();
     }
     
+    /**
+     * Return the first metadata corresponding to the Key
+     * @param key : the exact equals key
+     * @return a MetaData object
+     */
+    
+    public MetaData find (String key){
+        for(MetaData m : listOfMetaData ){
+            if(m.key.equals(key)){
+                return m;
+            }
+        }
+        return null;
+    }
+    
     private static final Logger LOGGER = Logger.getLogger(MetadataJobProperty.class.getName());
     
     /**
